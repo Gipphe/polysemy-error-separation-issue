@@ -17,12 +17,12 @@ import           Polysemy.Error
 catchesImplicitError
   :: (Member Foo r, Member (Embed IO) r, Member (Error String) r) => Sem r Int
 catchesImplicitError = do
-  foo () `catch` (\err -> embed @IO $ putStrLn $ "Caught error: " <> err)
+  foo `catch` (\err -> embed @IO $ putStrLn $ "Caught error: " <> err)
   pure 1
 
 failsToRunImplicitError :: (Member Foo r, Member (Embed IO) r) => Sem r Int
 failsToRunImplicitError = do
-  res <- runError @String $ foo ()
+  res <- runError @String $ foo
   case res of
     Left  err -> embed @IO $ putStrLn $ "Ran error: " <> err
     Right _   -> pure ()

@@ -10,19 +10,15 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Foo
-  ( Foo
-  , runFoo
-  , foo
-  ) where
+module Foo where
 
 import           Polysemy
 import           Polysemy.Error
 
 data Foo m a where
-    Foo ::b -> Foo m ()
+    Foo ::Foo m ()
 
 makeSem ''Foo
 
 runFoo :: Member (Error String) r => Sem (Foo ': r) a -> Sem r a
-runFoo = interpret $ \(Foo _) -> throw "Bar"
+runFoo = interpret $ \Foo -> throw "Bar"
