@@ -1,0 +1,1 @@
+stack runghc --package polysemy -- Main.hs
