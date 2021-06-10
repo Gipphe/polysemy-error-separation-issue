@@ -15,12 +15,12 @@ import           Polysemy
 import           Polysemy.Error
 
 catchesImplicitError
-  :: (Member Foo r, Member (Embed IO) r, Member (Error String) r) => Sem r Int
+  :: (Members '[Foo , Embed IO , Error String] r) => Sem r Int
 catchesImplicitError = do
   foo `catch` (\err -> embed @IO $ putStrLn $ "Caught error: " <> err)
   pure 1
 
-failsToRunImplicitError :: (Member Foo r, Member (Embed IO) r) => Sem r Int
+failsToRunImplicitError :: (Members '[Foo , Embed IO] r) => Sem r Int
 failsToRunImplicitError = do
   res <- runError @String $ foo
   case res of
