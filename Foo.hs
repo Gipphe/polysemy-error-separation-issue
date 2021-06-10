@@ -16,14 +16,8 @@ module Foo
   , foo
   ) where
 
-import           Polysemy                       ( Member
-                                                , Sem
-                                                , interpret
-                                                , makeSem
-                                                )
-import           Polysemy.Error                 ( Error
-                                                , throw
-                                                )
+import           Polysemy
+import           Polysemy.Error
 
 data Foo m a where
     Foo ::b -> Foo m ()
